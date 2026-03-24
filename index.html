@@ -1,0 +1,162 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Mimi 💕</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ffd6e0, #fff0f5);
+    overflow: hidden;
+    text-align: center;
+}
+
+/* Intro Screen */
+#intro {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #fff0f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#intro h2 {
+    color: #ff4d88;
+}
+
+button {
+    padding: 12px 22px;
+    border: none;
+    background: #ff4d88;
+    color: white;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Main Content */
+#main {
+    display: none;
+    padding-top: 60px;
+}
+
+h1 {
+    color: #ff4d88;
+    font-size: 42px;
+}
+
+/* Typewriter */
+#typewriter {
+    font-size: 20px;
+    color: #444;
+    width: 80%;
+    margin: auto;
+    min-height: 120px;
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    font-size: 20px;
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    0% {transform: translateY(100vh); opacity: 1;}
+    100% {transform: translateY(-10vh); opacity: 0;}
+}
+
+/* Cute floating elements */
+.float {
+    position: absolute;
+    font-size: 28px;
+    animation: floatSlow linear infinite;
+}
+
+@keyframes floatSlow {
+    0% {transform: translateY(100vh);}
+    100% {transform: translateY(-10vh);}
+}
+
+/* Final popup */
+#final {
+    display: none;
+    margin-top: 20px;
+    font-size: 22px;
+    color: #ff4d88;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="intro">
+    <h2>I made something for you… 💌</h2>
+    <button onclick="start()">Open it 🎁</button>
+</div>
+
+<div id="main">
+    <h1>Happy Birthday Mimi 💕</h1>
+    <div id="typewriter"></div>
+    <div id="final">– Mu 🤍</div>
+</div>
+
+<script>
+function start() {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("main").style.display = "block";
+    typeMessage();
+    createHearts();
+    createCute();
+}
+
+// Typewriter effect
+let text = "You are the best thing that happened in my life 🤍\n\nThank you for being with me… always.\n\nI truly pray that all your wishes come true on this beautiful day ✨\n\nAnd honestly… I just want to keep celebrating your birthdays with you, again and again 💕";
+
+let i = 0;
+function typeMessage() {
+    if (i < text.length) {
+        document.getElementById("typewriter").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeMessage, 50);
+    } else {
+        document.getElementById("final").style.display = "block";
+    }
+}
+
+// Hearts
+function createHearts() {
+    setInterval(() => {
+        let heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (4 + Math.random()*3) + "s";
+        document.body.appendChild(heart);
+    }, 300);
+}
+
+// Cute floating things
+function createCute() {
+    let items = ["🦋","🐦","🌸","✨","💫","🐥"];
+    setInterval(() => {
+        let el = document.createElement("div");
+        el.className = "float";
+        el.innerHTML = items[Math.floor(Math.random()*items.length)];
+        el.style.left = Math.random() * 100 + "vw";
+        el.style.animationDuration = (6 + Math.random()*4) + "s";
+        document.body.appendChild(el);
+    }, 700);
+}
+</script>
+
+</body>
+</html>
