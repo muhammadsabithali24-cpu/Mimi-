@@ -29,12 +29,12 @@ body {
 }
 
 button {
-    padding: 12px 22px;
+    padding: 15px 28px;
     border: none;
     background: #ff4d88;
     color: white;
-    border-radius: 25px;
-    font-size: 18px;
+    border-radius: 30px;
+    font-size: 20px;
     cursor: pointer;
 }
 
@@ -46,7 +46,7 @@ button {
     background: #fff0f5;
     justify-content: center;
     align-items: center;
-    font-size: 120px;
+    font-size: 150px;
     color: #ff4d88;
 }
 
@@ -55,7 +55,7 @@ button {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #ffd6e0;
+    background: linear-gradient(135deg, #fff0f5, #ffd6e0);
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -63,20 +63,20 @@ button {
 
 #bigText {
     font-family: 'Great Vibes', cursive;
-    font-size: 100px;
+    font-size: 120px;
     color: #ff4d88;
     animation: pop 1s ease-out, glow 1.5s infinite alternate;
 }
 
 @keyframes pop {
-    0% { transform: scale(0); }
-    70% { transform: scale(1.2); }
+    0% { transform: scale(0); opacity:0; }
+    70% { transform: scale(1.2); opacity:1; }
     100% { transform: scale(1); }
 }
 
 @keyframes glow {
     from { text-shadow: 0 0 10px #ff4d88; }
-    to { text-shadow: 0 0 30px #ff99bb; }
+    to { text-shadow: 0 0 40px #ff99bb; }
 }
 
 .confetti {
@@ -100,34 +100,56 @@ button {
 }
 
 #typewriter {
-    font-size: 50px;
+    font-size: 80px; /* BIGGER for full screen */
+    font-family: 'Great Vibes', cursive;
     width: 90%;
-    max-width: 1000px;
+    max-width: 1200px;
     margin: auto;
-    color: #444;
-    line-height: 1.3;
+    color: #ff4d88;
+    line-height: 1.2;
+    white-space: pre-wrap;
 }
 
 .paragraph {
     opacity: 0;
-    transition: opacity 1s;
-    margin: 30px 0;
+    transform: scale(0.5);
+    transition: opacity 1s, transform 1s;
+    margin: 20px 0;
 }
 
-/* Floating hearts */
-.heart {
+/* Floating hearts & stars */
+.heart, .star {
     position: absolute;
     animation: floatUp linear infinite;
+    pointer-events: none;
 }
 
 @keyframes floatUp {
-    0% {transform: translateY(100vh);}
-    100% {transform: translateY(-10vh);}
+    0% { transform: translateY(100vh) rotate(0deg); opacity:1;}
+    100% { transform: translateY(-10vh) rotate(360deg); opacity:0;}
+}
+
+/* Background glow effect */
+.background-glow {
+    position: fixed;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    background: radial-gradient(circle, rgba(255,77,136,0.15) 0%, rgba(255,255,255,0) 70%);
+    pointer-events: none;
+    animation: glowPulse 3s infinite alternate;
+}
+
+@keyframes glowPulse {
+    0% { opacity:0.3;}
+    100% { opacity:0.6;}
 }
 </style>
 </head>
 
 <body>
+
+<div class="background-glow"></div>
 
 <div id="intro">
     <h2>I made something for you 💌</h2>
@@ -173,7 +195,7 @@ function startCountdown() {
 function showWish() {
     let wish = document.getElementById("bigWish");
     wish.style.display = "flex";
-    createConfetti();
+    createConfetti(100); // bigger burst
     setTimeout(() => {
         wish.style.display = "none";
         showMain();
@@ -186,13 +208,14 @@ function createConfetti(num=80) {
         let conf = document.createElement("div");
         conf.className = "confetti";
         conf.style.left = Math.random() * 100 + "vw";
-        conf.style.background = ["#ff4d88","#ffd700","#00c3ff","#7cffcb"][Math.floor(Math.random()*4)];
+        conf.style.background = ["#ff4d88","#ffd700","#00c3ff","#7cffcb","#ff99bb","#ff66ff"][Math.floor(Math.random()*6)];
+        conf.style.width = conf.style.height = (5 + Math.random()*10)+"px";
         document.body.appendChild(conf);
-        setTimeout(() => conf.remove(), 3000);
+        setTimeout(() => conf.remove(), 4000);
     }
 }
 
-// Main Message Paragraph by Paragraph with mini confetti
+// Show Main Message Paragraph by Paragraph with mini confetti
 function showMain() {
     document.getElementById("main").style.display = "block";
     floating();
@@ -215,22 +238,24 @@ function showMain() {
 
         setTimeout(() => {
             para.style.opacity = 1;
-            createConfetti(30); // mini confetti for each paragraph
-        }, index * 2000);
+            para.style.transform = "scale(1)";
+            createConfetti(40); // mini confetti for each paragraph
+        }, index * 2500); // 2.5 seconds between each paragraph
     });
 }
 
-// Floating hearts
+// Floating hearts & stars
 function floating() {
     setInterval(() => {
         let el = document.createElement("div");
-        el.className = "heart";
-        el.innerHTML = ["💖","🦋","✨","🌸"][Math.floor(Math.random()*4)];
+        el.className = Math.random() < 0.6 ? "heart" : "star";
+        el.innerHTML = ["💖","🦋","✨","🌸","⭐","💝"][Math.floor(Math.random()*6)];
         el.style.left = Math.random()*100 + "vw";
-        el.style.fontSize = "35px";
+        el.style.fontSize = (20 + Math.random()*25) + "px";
         el.style.animationDuration = (5 + Math.random()*5) + "s";
         document.body.appendChild(el);
-    }, 400);
+        setTimeout(() => el.remove(), 8000);
+    }, 300);
 }
 </script>
 
