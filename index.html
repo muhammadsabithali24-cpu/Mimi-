@@ -50,7 +50,6 @@ button {
     align-items: center;
     font-size: 90px;
     color: #ff4d88;
-    display: flex;
 }
 
 /* Big Wish */
@@ -124,6 +123,7 @@ button {
     0% {transform: translateY(100vh);}
     100% {transform: translateY(-10vh);}
 }
+
 </style>
 </head>
 
@@ -145,6 +145,7 @@ button {
 </div>
 
 <script>
+
 function start() {
     document.getElementById("intro").style.display = "none";
     startCountdown();
@@ -169,7 +170,7 @@ function startCountdown() {
     }, 1000);
 }
 
-// Show Birthday Wish with full-screen pop and confetti
+// Show Wish with confetti
 function showWish() {
     let wish = document.getElementById("bigWish");
     wish.style.display = "flex";
@@ -193,56 +194,26 @@ function createConfetti() {
     }
 }
 
-// Main message and typewriter
-let mainText = "You are the best thing that happened in my life 🤍\n\nThank you for being with me… always.\n\nI truly pray that all your wishes come true on this beautiful day ✨\n\nI just want to keep celebrating your birthdays with you, again and again 💕";
-let finalText = "I pray all your dreams and wishes come true. With love, yours Mu 💝";
+// Main
+function showMain() {
+    document.getElementById("main").style.display = "block";
+    typeMessage();
+    floating();
+}
+
+// Typewriter
+let text = "You are the best thing that happened in my life 🤍\n\nThank you for being with me… always.\n\nI truly pray that all your wishes come true on this beautiful day ✨\n\nI just want to keep celebrating your birthdays with you, again and again 💕";
 
 let i = 0;
 function typeMessage() {
-    if (i < mainText.length) {
-        document.getElementById("typewriter").innerHTML += mainText.charAt(i);
+    if (i < text.length) {
+        document.getElementById("typewriter").innerHTML += text.charAt(i);
         i++;
         setTimeout(typeMessage, 50);
-    } else {
-        setTimeout(showFinalPop, 500);
     }
 }
 
-// Final pop-up full screen
-function showFinalPop() {
-    let pop = document.createElement("div");
-    pop.style.position = "fixed";
-    pop.style.top = "0";
-    pop.style.left = "0";
-    pop.style.width = "100%";
-    pop.style.height = "100%";
-    pop.style.background = "radial-gradient(circle, #fff0f5, #ffd6e0)";
-    pop.style.display = "flex";
-    pop.style.justifyContent = "center";
-    pop.style.alignItems = "center";
-    pop.style.flexDirection = "column";
-    pop.style.zIndex = "9999";
-    pop.style.animation = "popFull 1s ease-out forwards";
-    
-    let textEl = document.createElement("div");
-    textEl.innerHTML = finalText;
-    textEl.style.fontFamily = "'Great Vibes', cursive";
-    textEl.style.fontSize = "70px";
-    textEl.style.color = "#ff4d88";
-    textEl.style.textAlign = "center";
-    textEl.style.animation = "glow 1.5s infinite alternate";
-
-    pop.appendChild(textEl);
-    document.body.appendChild(pop);
-
-    createConfetti();
-
-    setTimeout(() => {
-        pop.remove();
-    }, 4000);
-}
-
-// Floating hearts animation
+// Floating hearts
 function floating() {
     setInterval(() => {
         let el = document.createElement("div");
@@ -255,22 +226,6 @@ function floating() {
     }, 400);
 }
 
-function showMain() {
-    document.getElementById("main").style.display = "block";
-    typeMessage();
-    floating();
-}
-
-// Add pop animation style
-let style = document.createElement('style');
-style.innerHTML = `
-@keyframes popFull {
-    0% { transform: scale(0); opacity: 0; }
-    70% { transform: scale(1.2); opacity: 1; }
-    100% { transform: scale(1); opacity: 1; }
-}
-`;
-document.head.appendChild(style);
 </script>
 
 </body>
