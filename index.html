@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <title>For Mimi 💕</title>
 
+<!-- Calligraphy Font -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
 <style>
 body {
     margin: 0;
@@ -25,6 +28,7 @@ body {
     align-items: center;
 }
 
+/* Button */
 button {
     padding: 12px 22px;
     border: none;
@@ -57,29 +61,43 @@ button {
     background: #ffd6e0;
     justify-content: center;
     align-items: center;
-    font-size: 45px;
-    color: #ff4d88;
-    font-weight: bold;
-    animation: glow 1s infinite alternate;
+    flex-direction: column;
 }
 
-/* Glow effect */
+/* Calligraphy Text */
+#bigText {
+    font-family: 'Great Vibes', cursive;
+    font-size: 80px;
+    color: #ff4d88;
+    animation: pop 1s ease-out, glow 1.5s infinite alternate;
+}
+
+/* Animations */
+@keyframes pop {
+    0% { transform: scale(0); }
+    70% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
 @keyframes glow {
     from { text-shadow: 0 0 10px #ff4d88; }
     to { text-shadow: 0 0 30px #ff99bb; }
 }
 
-/* Shake effect */
-@keyframes shake {
-    0% { transform: translate(0); }
-    25% { transform: translate(5px, -5px); }
-    50% { transform: translate(-5px, 5px); }
-    75% { transform: translate(5px, 5px); }
-    100% { transform: translate(0); }
+/* Confetti */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: red;
+    animation: fall 3s linear forwards;
 }
 
-.shake {
-    animation: shake 0.5s;
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
 }
 
 /* Main */
@@ -88,11 +106,6 @@ button {
     padding-top: 60px;
 }
 
-h1 {
-    color: #ff4d88;
-}
-
-/* Typewriter */
 #typewriter {
     font-size: 20px;
     width: 80%;
@@ -100,26 +113,13 @@ h1 {
     color: #444;
 }
 
-/* Hearts */
-.heart {
+/* Floating */
+.heart, .float {
     position: absolute;
-    font-size: 20px;
     animation: floatUp linear infinite;
 }
 
 @keyframes floatUp {
-    0% {transform: translateY(100vh);}
-    100% {transform: translateY(-10vh);}
-}
-
-/* Cute */
-.float {
-    position: absolute;
-    font-size: 28px;
-    animation: floatSlow linear infinite;
-}
-
-@keyframes floatSlow {
     0% {transform: translateY(100vh);}
     100% {transform: translateY(-10vh);}
 }
@@ -137,11 +137,10 @@ h1 {
 <div id="countdown"></div>
 
 <div id="bigWish">
-    HAPPY BIRTHDAY MIMI 💕
+    <div id="bigText">Happy Birthday Mimi 💕</div>
 </div>
 
 <div id="main">
-    <h1>For you 💕</h1>
     <div id="typewriter"></div>
 </div>
 
@@ -171,28 +170,35 @@ function startCountdown() {
     }, 1000);
 }
 
-// Big Wish with shake
+// Show Wish with confetti
 function showWish() {
     let wish = document.getElementById("bigWish");
     wish.style.display = "flex";
-    wish.classList.add("shake");
 
-    setTimeout(() => {
-        wish.classList.remove("shake");
-    }, 500);
+    createConfetti();
 
     setTimeout(() => {
         wish.style.display = "none";
         showMain();
-    }, 2000);
+    }, 2500);
+}
+
+// Confetti effect
+function createConfetti() {
+    for (let i = 0; i < 80; i++) {
+        let conf = document.createElement("div");
+        conf.className = "confetti";
+        conf.style.left = Math.random() * 100 + "vw";
+        conf.style.background = ["#ff4d88","#ffd700","#00c3ff","#7cffcb"][Math.floor(Math.random()*4)];
+        document.body.appendChild(conf);
+    }
 }
 
 // Main
 function showMain() {
     document.getElementById("main").style.display = "block";
     typeMessage();
-    createHearts();
-    createCute();
+    floating();
 }
 
 // Typewriter
@@ -207,29 +213,17 @@ function typeMessage() {
     }
 }
 
-// Hearts
-function createHearts() {
-    setInterval(() => {
-        let heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerHTML = "💖";
-        heart.style.left = Math.random()*100 + "vw";
-        heart.style.animationDuration = (4 + Math.random()*3) + "s";
-        document.body.appendChild(heart);
-    }, 300);
-}
-
-// Cute
-function createCute() {
-    let items = ["🦋","🐦","🌸","✨","💫","🐥"];
+// Floating hearts
+function floating() {
     setInterval(() => {
         let el = document.createElement("div");
-        el.className = "float";
-        el.innerHTML = items[Math.floor(Math.random()*items.length)];
+        el.className = "heart";
+        el.innerHTML = ["💖","🦋","✨","🌸"][Math.floor(Math.random()*4)];
         el.style.left = Math.random()*100 + "vw";
-        el.style.animationDuration = (6 + Math.random()*4) + "s";
+        el.style.fontSize = "25px";
+        el.style.animationDuration = (5 + Math.random()*5) + "s";
         document.body.appendChild(el);
-    }, 700);
+    }, 400);
 }
 
 </script>
