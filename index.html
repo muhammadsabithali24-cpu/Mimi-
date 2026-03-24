@@ -50,6 +50,7 @@ button {
     align-items: center;
     font-size: 90px;
     color: #ff4d88;
+    display: flex;
 }
 
 /* Big Wish */
@@ -124,6 +125,27 @@ button {
     100% {transform: translateY(-10vh);}
 }
 
+/* Final Pop Animation */
+.finalPop {
+    font-family: 'Great Vibes', cursive;
+    font-size: 70px;
+    color: #ff4d88;
+    text-align: center;
+    animation: pulseZoom 2s ease-in-out infinite, glow 1.5s infinite alternate;
+}
+
+@keyframes pulseZoom {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Full screen pop */
+@keyframes popFull {
+    0% { transform: scale(0); opacity: 0; }
+    70% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
 </style>
 </head>
 
@@ -145,7 +167,6 @@ button {
 </div>
 
 <script>
-
 function start() {
     document.getElementById("intro").style.display = "none";
     startCountdown();
@@ -170,11 +191,10 @@ function startCountdown() {
     }, 1000);
 }
 
-// Show Wish with confetti
+// Show Birthday Wish with full-screen pop and confetti
 function showWish() {
     let wish = document.getElementById("bigWish");
     wish.style.display = "flex";
-
     createConfetti();
 
     setTimeout(() => {
@@ -194,25 +214,54 @@ function createConfetti() {
     }
 }
 
-// Main
-function showMain() {
-    document.getElementById("main").style.display = "block";
-    typeMessage();
-    floating();
-}
+// Main message and typewriter
+let mainText = "You are the best thing that happened in my life 🤍\n\nThank you for being with me… always.\n\nI truly pray that all your wishes come true on this beautiful day ✨\n\nI just want to keep celebrating your birthdays with you, again and again 💕";
+let finalText = "I pray all your dreams and wishes come true. With love, yours Mu 💝";
 
-// Typewriter
-let text = "You are the best thing that happened in my life 🤍\n\nThank you for being with me… always.\n\nI truly pray that all your wishes come true on this beautiful day ✨\n\nI just want to keep celebrating your birthdays with you, again and again 💕\n\nI pray all your dreams and wishes come true. With love, yours Mu 💝";
 let i = 0;
 function typeMessage() {
-    if (i < text.length) {
-        document.getElementById("typewriter").innerHTML += text.charAt(i);
+    if (i < mainText.length) {
+        document.getElementById("typewriter").innerHTML += mainText.charAt(i);
         i++;
         setTimeout(typeMessage, 50);
+    } else {
+        setTimeout(showFinalPop, 500);
     }
 }
 
-// Floating hearts
+// Final cinematic pop
+function showFinalPop() {
+    let pop = document.createElement("div");
+    pop.style.position = "fixed";
+    pop.style.top = "0";
+    pop.style.left = "0";
+    pop.style.width = "100%";
+    pop.style.height = "100%";
+    pop.style.background = "radial-gradient(circle, #fff0f5, #ffd6e0)";
+    pop.style.display = "flex";
+    pop.style.justifyContent = "center";
+    pop.style.alignItems = "center";
+    pop.style.flexDirection = "column";
+    pop.style.zIndex = "9999";
+
+    let textEl = document.createElement("div");
+    textEl.className = "finalPop";
+    textEl.innerHTML = finalText;
+
+    pop.appendChild(textEl);
+    document.body.appendChild(pop);
+
+    // Confetti and floating hearts behind
+    createConfetti();
+    floating();
+
+    // Remove pop after 5s
+    setTimeout(() => {
+        pop.remove();
+    }, 5000);
+}
+
+// Floating hearts animation
 function floating() {
     setInterval(() => {
         let el = document.createElement("div");
@@ -225,6 +274,11 @@ function floating() {
     }, 400);
 }
 
+function showMain() {
+    document.getElementById("main").style.display = "block";
+    typeMessage();
+    floating();
+}
 </script>
 
 </body>
