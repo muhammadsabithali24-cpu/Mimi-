@@ -28,6 +28,7 @@ body {
     align-items: center;
 }
 
+/* Button */
 button {
     padding: 12px 22px;
     border: none;
@@ -38,6 +39,7 @@ button {
     cursor: pointer;
 }
 
+/* Countdown */
 #countdown {
     display: none;
     position: absolute;
@@ -51,6 +53,7 @@ button {
     display: flex;
 }
 
+/* Big Wish */
 #bigWish {
     display: none;
     position: absolute;
@@ -62,6 +65,7 @@ button {
     flex-direction: column;
 }
 
+/* Calligraphy Text */
 #bigText {
     font-family: 'Great Vibes', cursive;
     font-size: 80px;
@@ -69,6 +73,7 @@ button {
     animation: pop 1s ease-out, glow 1.5s infinite alternate;
 }
 
+/* Animations */
 @keyframes pop {
     0% { transform: scale(0); }
     70% { transform: scale(1.2); }
@@ -80,6 +85,7 @@ button {
     to { text-shadow: 0 0 30px #ff99bb; }
 }
 
+/* Confetti */
 .confetti {
     position: absolute;
     width: 10px;
@@ -95,6 +101,7 @@ button {
     }
 }
 
+/* Main */
 #main {
     display: none;
     padding-top: 60px;
@@ -107,7 +114,8 @@ button {
     color: #444;
 }
 
-.heart {
+/* Floating */
+.heart, .float {
     position: absolute;
     animation: floatUp linear infinite;
 }
@@ -117,7 +125,7 @@ button {
     100% {transform: translateY(-10vh);}
 }
 
-/* Final Pop */
+/* Final Pop Animation */
 .finalPop {
     font-family: 'Great Vibes', cursive;
     font-size: 70px;
@@ -132,26 +140,15 @@ button {
     100% { transform: scale(1); }
 }
 
+/* Full screen pop */
 @keyframes popFull {
     0% { transform: scale(0); opacity: 0; }
     70% { transform: scale(1.2); opacity: 1; }
     100% { transform: scale(1); opacity: 1; }
 }
-
-/* Sparkle orbit animation */
-.orbit {
-    position: absolute;
-    font-size: 20px;
-    transform-origin: center center;
-    animation: rotateOrbit linear infinite;
-}
-
-@keyframes rotateOrbit {
-    0% { transform: rotate(0deg) translateX(var(--radius)) rotate(0deg);}
-    100% { transform: rotate(360deg) translateX(var(--radius)) rotate(-360deg);}
-}
 </style>
 </head>
+
 <body>
 
 <div id="intro">
@@ -194,7 +191,7 @@ function startCountdown() {
     }, 1000);
 }
 
-// Show Birthday Wish
+// Show Birthday Wish with full-screen pop and confetti
 function showWish() {
     let wish = document.getElementById("bigWish");
     wish.style.display = "flex";
@@ -217,7 +214,7 @@ function createConfetti() {
     }
 }
 
-// Main message
+// Main message and typewriter
 let mainText = "You are the best thing that happened in my life 🤍\n\nThank you for being with me… always.\n\nI truly pray that all your wishes come true on this beautiful day ✨\n\nI just want to keep celebrating your birthdays with you, again and again 💕";
 let finalText = "I pray all your dreams and wishes come true. With love, yours Mu 💝";
 
@@ -232,7 +229,7 @@ function typeMessage() {
     }
 }
 
-// Final pop with orbiting sparkles
+// Final cinematic pop
 function showFinalPop() {
     let pop = document.createElement("div");
     pop.style.position = "fixed";
@@ -250,26 +247,18 @@ function showFinalPop() {
     let textEl = document.createElement("div");
     textEl.className = "finalPop";
     textEl.innerHTML = finalText;
+
     pop.appendChild(textEl);
     document.body.appendChild(pop);
 
+    // Confetti and floating hearts behind
     createConfetti();
     floating();
 
-    // Add orbiting sparkles
-    for (let j=0;j<20;j++){
-        let sparkle = document.createElement("div");
-        sparkle.className = "orbit";
-        sparkle.innerHTML = ["✨","💖","🌸","💫"][Math.floor(Math.random()*4)];
-        sparkle.style.top = "50%";
-        sparkle.style.left = "50%";
-        let radius = 50 + Math.random()*50; // radius in px
-        sparkle.style.setProperty('--radius', radius + 'px');
-        sparkle.style.animationDuration = (2 + Math.random()*2) + "s";
-        pop.appendChild(sparkle);
-    }
-
-    setTimeout(() => { pop.remove(); }, 6000);
+    // Remove pop after 5s
+    setTimeout(() => {
+        pop.remove();
+    }, 5000);
 }
 
 // Floating hearts animation
