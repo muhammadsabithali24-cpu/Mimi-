@@ -114,7 +114,7 @@ button {
     margin: 30px 0;
 }
 
-/* Floating */
+/* Floating hearts */
 .heart {
     position: absolute;
     animation: floatUp linear infinite;
@@ -124,7 +124,6 @@ button {
     0% {transform: translateY(100vh);}
     100% {transform: translateY(-10vh);}
 }
-
 </style>
 </head>
 
@@ -146,7 +145,6 @@ button {
 </div>
 
 <script>
-
 function start() {
     document.getElementById("intro").style.display = "none";
     startCountdown();
@@ -175,9 +173,7 @@ function startCountdown() {
 function showWish() {
     let wish = document.getElementById("bigWish");
     wish.style.display = "flex";
-
     createConfetti();
-
     setTimeout(() => {
         wish.style.display = "none";
         showMain();
@@ -185,17 +181,18 @@ function showWish() {
 }
 
 // Confetti effect
-function createConfetti() {
-    for (let i = 0; i < 80; i++) {
+function createConfetti(num=80) {
+    for (let i = 0; i < num; i++) {
         let conf = document.createElement("div");
         conf.className = "confetti";
         conf.style.left = Math.random() * 100 + "vw";
         conf.style.background = ["#ff4d88","#ffd700","#00c3ff","#7cffcb"][Math.floor(Math.random()*4)];
         document.body.appendChild(conf);
+        setTimeout(() => conf.remove(), 3000);
     }
 }
 
-// Show Main Message Paragraph by Paragraph
+// Main Message Paragraph by Paragraph with mini confetti
 function showMain() {
     document.getElementById("main").style.display = "block";
     floating();
@@ -218,7 +215,8 @@ function showMain() {
 
         setTimeout(() => {
             para.style.opacity = 1;
-        }, index * 2000); // 2 seconds delay between paragraphs
+            createConfetti(30); // mini confetti for each paragraph
+        }, index * 2000);
     });
 }
 
@@ -234,7 +232,6 @@ function floating() {
         document.body.appendChild(el);
     }, 400);
 }
-
 </script>
 
 </body>
