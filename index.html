@@ -79,6 +79,7 @@ button {
     to { text-shadow: 0 0 40px #ff99bb; }
 }
 
+/* Confetti */
 .confetti {
     position: absolute;
     width: 10px;
@@ -94,13 +95,14 @@ button {
     }
 }
 
+/* Main message */
 #main {
     display: none;
     padding-top: 60px;
 }
 
 #typewriter {
-    font-size: 80px; /* BIGGER for full screen */
+    font-size: 80px;
     font-family: 'Great Vibes', cursive;
     width: 90%;
     max-width: 1200px;
@@ -112,9 +114,14 @@ button {
 
 .paragraph {
     opacity: 0;
-    transform: scale(0.5);
+    transform: scale(0.3);
     transition: opacity 1s, transform 1s;
-    margin: 20px 0;
+    margin: 40px 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: center center;
+    transform: translate(-50%, -50%) scale(0.3);
 }
 
 /* Floating hearts & stars */
@@ -195,7 +202,7 @@ function startCountdown() {
 function showWish() {
     let wish = document.getElementById("bigWish");
     wish.style.display = "flex";
-    createConfetti(100); // bigger burst
+    createConfetti(100);
     setTimeout(() => {
         wish.style.display = "none";
         showMain();
@@ -215,7 +222,7 @@ function createConfetti(num=80) {
     }
 }
 
-// Show Main Message Paragraph by Paragraph with mini confetti
+// Show Main Message Paragraph by Paragraph with cinematic zoom
 function showMain() {
     document.getElementById("main").style.display = "block";
     floating();
@@ -238,9 +245,16 @@ function showMain() {
 
         setTimeout(() => {
             para.style.opacity = 1;
-            para.style.transform = "scale(1)";
-            createConfetti(40); // mini confetti for each paragraph
-        }, index * 2500); // 2.5 seconds between each paragraph
+            para.style.transform = "translate(-50%, -50%) scale(1)";
+            createConfetti(50);
+        }, index * 3000); // 3 seconds between each paragraph
+
+        // Remove previous paragraph after next appears
+        setTimeout(() => {
+            if (index > 0) {
+                container.children[index-1].style.opacity = 0;
+            }
+        }, index * 3000 + 1000);
     });
 }
 
@@ -251,7 +265,7 @@ function floating() {
         el.className = Math.random() < 0.6 ? "heart" : "star";
         el.innerHTML = ["💖","🦋","✨","🌸","⭐","💝"][Math.floor(Math.random()*6)];
         el.style.left = Math.random()*100 + "vw";
-        el.style.fontSize = (20 + Math.random()*25) + "px";
+        el.style.fontSize = (25 + Math.random()*30) + "px";
         el.style.animationDuration = (5 + Math.random()*5) + "s";
         document.body.appendChild(el);
         setTimeout(() => el.remove(), 8000);
