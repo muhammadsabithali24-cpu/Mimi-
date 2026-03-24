@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,20 +13,16 @@ body {
     text-align: center;
 }
 
-/* Intro Screen */
+/* Intro */
 #intro {
     position: absolute;
     width: 100%;
     height: 100%;
     background: #fff0f5;
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-}
-
-#intro h2 {
-    color: #ff4d88;
+    justify-content: center;
+    align-items: center;
 }
 
 button {
@@ -41,7 +35,54 @@ button {
     cursor: pointer;
 }
 
-/* Main Content */
+/* Countdown */
+#countdown {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #fff0f5;
+    justify-content: center;
+    align-items: center;
+    font-size: 90px;
+    color: #ff4d88;
+}
+
+/* Big Wish */
+#bigWish {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #ffd6e0;
+    justify-content: center;
+    align-items: center;
+    font-size: 45px;
+    color: #ff4d88;
+    font-weight: bold;
+    animation: glow 1s infinite alternate;
+}
+
+/* Glow effect */
+@keyframes glow {
+    from { text-shadow: 0 0 10px #ff4d88; }
+    to { text-shadow: 0 0 30px #ff99bb; }
+}
+
+/* Shake effect */
+@keyframes shake {
+    0% { transform: translate(0); }
+    25% { transform: translate(5px, -5px); }
+    50% { transform: translate(-5px, 5px); }
+    75% { transform: translate(5px, 5px); }
+    100% { transform: translate(0); }
+}
+
+.shake {
+    animation: shake 0.5s;
+}
+
+/* Main */
 #main {
     display: none;
     padding-top: 60px;
@@ -49,19 +90,17 @@ button {
 
 h1 {
     color: #ff4d88;
-    font-size: 42px;
 }
 
 /* Typewriter */
 #typewriter {
     font-size: 20px;
-    color: #444;
     width: 80%;
     margin: auto;
-    min-height: 120px;
+    color: #444;
 }
 
-/* Floating hearts */
+/* Hearts */
 .heart {
     position: absolute;
     font-size: 20px;
@@ -69,11 +108,11 @@ h1 {
 }
 
 @keyframes floatUp {
-    0% {transform: translateY(100vh); opacity: 1;}
-    100% {transform: translateY(-10vh); opacity: 0;}
+    0% {transform: translateY(100vh);}
+    100% {transform: translateY(-10vh);}
 }
 
-/* Cute floating elements */
+/* Cute */
 .float {
     position: absolute;
     font-size: 28px;
@@ -85,41 +124,79 @@ h1 {
     100% {transform: translateY(-10vh);}
 }
 
-/* Final popup */
-#final {
-    display: none;
-    margin-top: 20px;
-    font-size: 22px;
-    color: #ff4d88;
-}
-
 </style>
 </head>
 
 <body>
 
 <div id="intro">
-    <h2>I made something for you… 💌</h2>
-    <button onclick="start()">Open it 🎁</button>
+    <h2>I made something for you 💌</h2>
+    <button onclick="start()">Open 🎁</button>
+</div>
+
+<div id="countdown"></div>
+
+<div id="bigWish">
+    HAPPY BIRTHDAY MIMI 💕
 </div>
 
 <div id="main">
-    <h1>Happy Birthday Mimi 💕</h1>
+    <h1>For you 💕</h1>
     <div id="typewriter"></div>
-    <div id="final">– Mu 🤍</div>
 </div>
 
 <script>
+
 function start() {
     document.getElementById("intro").style.display = "none";
+    startCountdown();
+}
+
+// Countdown
+let num = 5;
+function startCountdown() {
+    let cd = document.getElementById("countdown");
+    cd.style.display = "flex";
+    cd.innerHTML = num;
+
+    let interval = setInterval(() => {
+        num--;
+        cd.innerHTML = num;
+
+        if (num === 0) {
+            clearInterval(interval);
+            cd.style.display = "none";
+            showWish();
+        }
+    }, 1000);
+}
+
+// Big Wish with shake
+function showWish() {
+    let wish = document.getElementById("bigWish");
+    wish.style.display = "flex";
+    wish.classList.add("shake");
+
+    setTimeout(() => {
+        wish.classList.remove("shake");
+    }, 500);
+
+    setTimeout(() => {
+        wish.style.display = "none";
+        showMain();
+    }, 2000);
+}
+
+// Main
+function showMain() {
     document.getElementById("main").style.display = "block";
     typeMessage();
     createHearts();
     createCute();
 }
 
-// Typewriter effect
-let text = "You are the best thing that happened in my life 🤍\n\nThank you for being with me… always.\n\nI truly pray that all your wishes come true on this beautiful day ✨\n\nAnd honestly… I just want to keep celebrating your birthdays with you, again and again 💕";
+// Typewriter
+let text = "You are the best thing that happened in my life 🤍\n\nThank you for being with me… always.\n\nI truly pray that all your wishes come true on this beautiful day ✨\n\nI just want to keep celebrating your birthdays with you, again and again 💕";
 
 let i = 0;
 function typeMessage() {
@@ -127,8 +204,6 @@ function typeMessage() {
         document.getElementById("typewriter").innerHTML += text.charAt(i);
         i++;
         setTimeout(typeMessage, 50);
-    } else {
-        document.getElementById("final").style.display = "block";
     }
 }
 
@@ -138,24 +213,25 @@ function createHearts() {
         let heart = document.createElement("div");
         heart.className = "heart";
         heart.innerHTML = "💖";
-        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.left = Math.random()*100 + "vw";
         heart.style.animationDuration = (4 + Math.random()*3) + "s";
         document.body.appendChild(heart);
     }, 300);
 }
 
-// Cute floating things
+// Cute
 function createCute() {
     let items = ["🦋","🐦","🌸","✨","💫","🐥"];
     setInterval(() => {
         let el = document.createElement("div");
         el.className = "float";
         el.innerHTML = items[Math.floor(Math.random()*items.length)];
-        el.style.left = Math.random() * 100 + "vw";
+        el.style.left = Math.random()*100 + "vw";
         el.style.animationDuration = (6 + Math.random()*4) + "s";
         document.body.appendChild(el);
     }, 700);
 }
+
 </script>
 
 </body>
