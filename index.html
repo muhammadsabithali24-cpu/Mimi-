@@ -35,7 +35,7 @@ button {
     background: #ff4d88;
     color: white;
     border-radius: 25px;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
 }
 
@@ -48,7 +48,7 @@ button {
     background: #fff0f5;
     justify-content: center;
     align-items: center;
-    font-size: 90px;
+    font-size: 120px;
     color: #ff4d88;
 }
 
@@ -67,7 +67,7 @@ button {
 /* Calligraphy Text */
 #bigText {
     font-family: 'Great Vibes', cursive;
-    font-size: 80px;
+    font-size: 100px;
     color: #ff4d88;
     animation: pop 1s ease-out, glow 1.5s infinite alternate;
 }
@@ -107,10 +107,13 @@ button {
 }
 
 #typewriter {
-    font-size: 20px;
-    width: 80%;
+    font-size: 50px;
+    width: 90%;
+    max-width: 1000px;
     margin: auto;
     color: #444;
+    line-height: 1.3;
+    white-space: pre-wrap;
 }
 
 /* Floating */
@@ -202,7 +205,7 @@ function showMain() {
 }
 
 // Typewriter
-let text = "You are the best thing that happened in my life 🤍\n\nThank you for being with me… always.\n\nI truly pray that all your wishes come true on this beautiful day ✨\n\nI just want to keep celebrating your birthdays with you, again and again 💕";
+let text = "You are the best thing that happened in my life 🤍\n\nThank you for being with me… always.\n\nI truly pray that all your wishes come true on this beautiful day ✨\n\nI just want to keep celebrating your birthdays with you, again and again 💕\n\nwith Love, Yours MU💝";
 
 let i = 0;
 function typeMessage() {
@@ -220,7 +223,7 @@ function floating() {
         el.className = "heart";
         el.innerHTML = ["💖","🦋","✨","🌸"][Math.floor(Math.random()*4)];
         el.style.left = Math.random()*100 + "vw";
-        el.style.fontSize = "25px";
+        el.style.fontSize = "35px";
         el.style.animationDuration = (5 + Math.random()*5) + "s";
         document.body.appendChild(el);
     }, 400);
