@@ -124,6 +124,28 @@ button {
     0% {transform: translateY(100vh);}
     100% {transform: translateY(-10vh);}
 }
+
+/* Final Pop Animation */
+.finalPop {
+    font-family: 'Great Vibes', cursive;
+    font-size: 70px;
+    color: #ff4d88;
+    text-align: center;
+    animation: pulseZoom 2s ease-in-out infinite, glow 1.5s infinite alternate;
+}
+
+@keyframes pulseZoom {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Full screen pop */
+@keyframes popFull {
+    0% { transform: scale(0); opacity: 0; }
+    70% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
 </style>
 </head>
 
@@ -173,7 +195,6 @@ function startCountdown() {
 function showWish() {
     let wish = document.getElementById("bigWish");
     wish.style.display = "flex";
-
     createConfetti();
 
     setTimeout(() => {
@@ -208,7 +229,7 @@ function typeMessage() {
     }
 }
 
-// Final pop-up full screen
+// Final cinematic pop
 function showFinalPop() {
     let pop = document.createElement("div");
     pop.style.position = "fixed";
@@ -222,24 +243,22 @@ function showFinalPop() {
     pop.style.alignItems = "center";
     pop.style.flexDirection = "column";
     pop.style.zIndex = "9999";
-    pop.style.animation = "popFull 1s ease-out forwards";
-    
+
     let textEl = document.createElement("div");
+    textEl.className = "finalPop";
     textEl.innerHTML = finalText;
-    textEl.style.fontFamily = "'Great Vibes', cursive";
-    textEl.style.fontSize = "70px";
-    textEl.style.color = "#ff4d88";
-    textEl.style.textAlign = "center";
-    textEl.style.animation = "glow 1.5s infinite alternate";
 
     pop.appendChild(textEl);
     document.body.appendChild(pop);
 
+    // Confetti and floating hearts behind
     createConfetti();
+    floating();
 
+    // Remove pop after 5s
     setTimeout(() => {
         pop.remove();
-    }, 4000);
+    }, 5000);
 }
 
 // Floating hearts animation
@@ -260,17 +279,6 @@ function showMain() {
     typeMessage();
     floating();
 }
-
-// Add pop animation style
-let style = document.createElement('style');
-style.innerHTML = `
-@keyframes popFull {
-    0% { transform: scale(0); opacity: 0; }
-    70% { transform: scale(1.2); opacity: 1; }
-    100% { transform: scale(1); opacity: 1; }
-}
-`;
-document.head.appendChild(style);
 </script>
 
 </body>
